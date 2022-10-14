@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { PathProps } from "./App";
 
 export const Layout = ({ paths }: { paths: PathProps[] }) => {
@@ -26,6 +26,18 @@ export const Layout = ({ paths }: { paths: PathProps[] }) => {
         if (hash) navigate(hash);
       });
   }, []);
+  // locationからpathnameを取得
+  const { pathname } = useLocation();
+  // 画面遷移が起きたらhostにhistoryをpush
+  useEffect(() => {
+    if (window.google) {
+      const state = {
+        state: new Date().getTime(),
+      };
+      const params = {};
+      google.script.history.push(state, params, pathname);
+    }
+  }, [pathname]);
   return (
     <>
       <div className="flex flex-col my-4 border-b">
