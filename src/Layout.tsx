@@ -1,4 +1,5 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { PathProps } from "./App";
 
 export const Layout = ({ paths }: { paths: PathProps[] }) => {
@@ -16,6 +17,15 @@ export const Layout = ({ paths }: { paths: PathProps[] }) => {
       <div className="px-4 py-2">{path.title}</div>
     </NavLink>
   ));
+  // navigateを定義
+  const navigate = useNavigate();
+  // GASの初回アクセス時にhost側でURL指定があればそのページに遷移
+  useEffect(() => {
+    if (window.google)
+      google.script.url.getLocation(({ hash }) => {
+        if (hash) navigate(hash);
+      });
+  }, []);
   return (
     <>
       <div className="flex flex-col my-4 border-b">
