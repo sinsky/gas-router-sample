@@ -16,11 +16,13 @@
 
     GAS project files - sample
 
-    ```gas:code.gs
+    ```gas
+    // code.gs
     const doGet = () => HtmlService.createHtmlOutputFromFile("dist/index");
     ```
 
-    ```html:dist/index.html
+    ```html
+    <!-- dist/index.html -->
     Contents of dist/index.html
     ```
 
